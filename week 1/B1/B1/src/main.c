@@ -29,6 +29,14 @@
  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 #include <asf.h>
+#include <util/delay.h>
+
+void wait(int ms)
+{
+	for(int i=0; i<ms; i++){
+		_delay_ms(1);
+	}
+}
 
 int main (void)
 {
@@ -37,4 +45,14 @@ int main (void)
 	board_init();
 
 	/* Insert application code here, after the board has been initialized. */
+
+	DDRD = 0b11111111;
+	while (1)
+	{
+		PORTD = 0b1000000;
+		wait(500);
+		PORTD = 0b0100000;
+		wait(500);
+	}
+	return 1;
 }
