@@ -3,11 +3,11 @@ B3.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  0000013a  2**0
+  0 .data         00000000  00800100  00800100  0000013c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000000e6  00000000  00000000  00000054  2**1
+  1 .text         000000e8  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  0000013a  2**0
+  2 .comment      00000030  00000000  00000000  0000013c  2**0
                   CONTENTS, READONLY
   3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000016c  2**2
                   CONTENTS, READONLY
@@ -112,7 +112,7 @@ Disassembly of section .text:
   94:	de bf       	out	0x3e, r29	; 62
   96:	cd bf       	out	0x3d, r28	; 61
   98:	14 d0       	rcall	.+40     	; 0xc2 <main>
-  9a:	23 c0       	rjmp	.+70     	; 0xe2 <_exit>
+  9a:	24 c0       	rjmp	.+72     	; 0xe4 <_exit>
 
 0000009c <__bad_interrupt>:
   9c:	b1 cf       	rjmp	.-158    	; 0x0 <__vectors>
@@ -170,37 +170,38 @@ int main (void)
 	DDRD = 0b10000000;
   c4:	80 e8       	ldi	r24, 0x80	; 128
   c6:	81 bb       	out	0x11, r24	; 17
-	PORTC = 0x0;
-  c8:	15 ba       	out	0x15, r1	; 21
+	PORTC = 0x10;
+  c8:	80 e1       	ldi	r24, 0x10	; 16
+  ca:	85 bb       	out	0x15, r24	; 21
 
 	while(1){
-		if((PORTC & 0b00000001)!=0){
+		if((PINC & 0b00000001)!=0){
 			PORTD = 0b10000000;
-  ca:	c0 e8       	ldi	r28, 0x80	; 128
+  cc:	c0 e8       	ldi	r28, 0x80	; 128
 	/* Insert application code here, after the board has been initialized. */
 	DDRD = 0b10000000;
-	PORTC = 0x0;
+	PORTC = 0x10;
 
 	while(1){
-		if((PORTC & 0b00000001)!=0){
-  cc:	a8 9b       	sbis	0x15, 0	; 21
-  ce:	fe cf       	rjmp	.-4      	; 0xcc <main+0xa>
+		if((PINC & 0b00000001)!=0){
+  ce:	98 9b       	sbis	0x13, 0	; 19
+  d0:	fe cf       	rjmp	.-4      	; 0xce <main+0xc>
 			PORTD = 0b10000000;
-  d0:	c2 bb       	out	0x12, r28	; 18
+  d2:	c2 bb       	out	0x12, r28	; 18
 			wait(500);
-  d2:	84 ef       	ldi	r24, 0xF4	; 244
-  d4:	91 e0       	ldi	r25, 0x01	; 1
-  d6:	e4 df       	rcall	.-56     	; 0xa0 <wait>
+  d4:	84 ef       	ldi	r24, 0xF4	; 244
+  d6:	91 e0       	ldi	r25, 0x01	; 1
+  d8:	e3 df       	rcall	.-58     	; 0xa0 <wait>
 			PORTD = 0b00000000;
-  d8:	12 ba       	out	0x12, r1	; 18
+  da:	12 ba       	out	0x12, r1	; 18
 			wait(500);		
-  da:	84 ef       	ldi	r24, 0xF4	; 244
-  dc:	91 e0       	ldi	r25, 0x01	; 1
-  de:	e0 df       	rcall	.-64     	; 0xa0 <wait>
-  e0:	f5 cf       	rjmp	.-22     	; 0xcc <main+0xa>
+  dc:	84 ef       	ldi	r24, 0xF4	; 244
+  de:	91 e0       	ldi	r25, 0x01	; 1
+  e0:	df df       	rcall	.-66     	; 0xa0 <wait>
+  e2:	f5 cf       	rjmp	.-22     	; 0xce <main+0xc>
 
-000000e2 <_exit>:
-  e2:	f8 94       	cli
+000000e4 <_exit>:
+  e4:	f8 94       	cli
 
-000000e4 <__stop_program>:
-  e4:	ff cf       	rjmp	.-2      	; 0xe4 <__stop_program>
+000000e6 <__stop_program>:
+  e6:	ff cf       	rjmp	.-2      	; 0xe6 <__stop_program>

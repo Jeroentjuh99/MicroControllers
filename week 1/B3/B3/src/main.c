@@ -47,10 +47,10 @@ int main (void)
 
 	/* Insert application code here, after the board has been initialized. */
 	DDRD = 0b10000000;
-	PORTC = 0x0;
+	PORTC = 0x10;
 
 	while(1){
-		if((PORTC & 0b00000001)!=0){
+		if((PINC & 0b00000001)!=0){
 			PORTD = 0b10000000;
 			wait(500);
 			PORTD = 0b00000000;
