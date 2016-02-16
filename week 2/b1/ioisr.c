@@ -80,11 +80,12 @@ Version :    	DMK, Initial code
 {
 	// Init I/O
 	DDRD = 0xF0;			// PORTD(7:4) output, PORTD(3:0) input
-	DDRE = 0xF0;	
+	DDRE = 0x0;			// PORTE INPUT
 
 	// Init Interrupt hardware
-	EICRA |= 0x3B;			// INT1 falling edge, INT0 rising edge
-    EIMSK |= 0x06;			// Enable INT1 & INT0
+	EICRA |= 0x0B;	// INT1 falling edge, INT0 rising edge
+	EICRB |= 0x3;	//INT4 rising
+    EIMSK |= 0b10011;			// Enable INT1 & INT0
 	
 	// Enable global interrupt system
 	//SREG = 0x80;			// Of direct via SREG of via wrapper
