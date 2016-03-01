@@ -1,35 +1,8 @@
-/**
- * \file
- *
- * \brief Empty user application template
- *
- */
-
-/**
- * \mainpage User Application template doxygen documentation
- *
- * \par Empty user application template
- *
- * Bare minimum empty user application template
- *
- * \par Content
- *
- * -# Include the ASF header files (through asf.h)
- * -# "Insert system clock initialization code here" comment
- * -# Minimal main function that starts with a call to board_init()
- * -# "Insert application code here" comment
- *
- */
-
-/*
- * Include header files for all drivers that have been imported from
- * Atmel Software Framework (ASF).
- */
-/*
- * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
- */
-#include <asf.h>
 #include <util/delay.h>
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+#define BIT(x) (1 << (x))
 
 void wait(int ms)
 {
@@ -39,20 +12,17 @@ void wait(int ms)
 }
 
 int main(void){
-	DDRD = 0b11111111;
-
-	PORTD |= BIT(6);
-
+	DDRD = 0xFF;
+	
+	PORTD = 0x40; // 0100 0000
+	
 	while (1){
-		if (PORTD & BIT(6)){
-			PORTD &= 0x00;
-			PORTD |= BIT(7);
-		}
-		else if (PORTD & BIT(7)){
-			PORTD &= 0x00;
-			PORTD |= BIT(6);
-		}
-
-		_delay_ms(100);
+		wait(100);
+		// XOR -> 0100 0000 ^ 1000 0000 = 1100 0000 (oneven x-te cycle)
+		// XOR -> 1000 0000 ^ 1000 0000 = 0000 0000 (even x-te cycle)
+		PORTD ^= BIT(7);
+		// XOR -> 1100 0000 ^ 0100 0000 = 1000 0000
+		// XOR -> 0000 0000 ^ 0100 0000 = 0100 0000
+		PORTD ^= BIT(6);
 	}
 }

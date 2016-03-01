@@ -50,15 +50,9 @@ Version :    	DMK, Initial code
 	}
 }
 
-void timer2init(){
-	OCR2 = 250;
-	TIMSK |= BIT(7);
-	SREG |= BIT(7);
-	TCCR2 = 0b00001011;
-}
 ISR (TIMER2_COMP_vect){
 	msCount++;
-	
+	// Bij elke 50 hits een incrementie fixen
 	if (msCount == 50){
 		PORTC ^= BIT(0);
 		msCount = 0;
@@ -76,6 +70,13 @@ ISR (TIMER2_COMP_vect){
 	}
 }
 
+void timer2init(){
+	OCR2 = 250;
+	TIMSK |= BIT(7);
+	SREG |= BIT(7);
+	TCCR2 = 0b00001011;
+}
+
 int main( void ) { 
 	DDRC = 0xFF;
 	TCCR2 = 0b00001011;
@@ -83,8 +84,6 @@ int main( void ) {
 	timer2init(); 
 	while (1) 
 	{ 
-		// do something else 
 		wait(10);
-		// every 10 ms (busy waiting 
 	} 
 } 

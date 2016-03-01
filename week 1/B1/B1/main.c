@@ -6,23 +6,21 @@
 
 void wait(int ms)
 {
-	while(ms > 0){
+	for(int i=0; i<ms; i++){
 		_delay_ms(1);
-		ms--;
 	}
 }
 
-int main(void){
-	
+int main (void)
+{
 	DDRD = 0b11111111;
 	
-	char counter;
-	
-	while (1){
-		for (counter = 0; counter < 8; counter++){
-			PORTD = BIT(counter);
-			_delay_ms(50);
-		}
+	while (1)
+	{
+		PORTD = 0b1000000;
+		wait(500);
+		PORTD = 0b0100000;
+		wait(500);
 	}
+	return 1;
 }
-

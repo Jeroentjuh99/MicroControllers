@@ -14,15 +14,21 @@ void wait(int ms)
 
 int main(void){
 	
-	DDRD = 0b11111111;
+	DDRC = 0x00;
+	DDRD = 0xFF;
 	
-	char counter;
+	PORTD &= ~BIT(7); // 0000 0000 & 0111 1111 = 0000 0000 
 	
 	while (1){
-		for (counter = 0; counter < 8; counter++){
-			PORTD = BIT(counter);
-			_delay_ms(50);
+		
+		if (PINC & 0x01){
+			wait(200);
+			PORTD = BIT(7);
+		} else {
+			PORTD = 0;
 		}
+		
 	}
+	
+	return 0;
 }
-
