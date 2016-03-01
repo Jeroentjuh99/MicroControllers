@@ -56,19 +56,6 @@ void timer2init(){
 	SREG |= BIT(7);
 	TCCR2 = 0b00001011;
 }
-/*
-ISR( TIMER2_COMP_vect ) 
-{ 
-	msCount++;
-	// Increment ms counter 
-	if (msCount == 500 ) { 
-		PORTC ^= BIT(0);
-		// Toggle bit 0 van PORTC 
-		msCount = 0;
-		// Reset ms_count  value 
-	}
-}
-*/
 ISR (TIMER2_COMP_vect){
 	msCount++;
 	
