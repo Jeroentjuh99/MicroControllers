@@ -21,14 +21,17 @@ int main(void){
 	
 	while (1){
 		
-		if (PINC & 0x01){
-			wait(200);
+		if (PINC & 1){
 			PORTD = BIT(7);
-		} else {
-			PORTD = 0;
+			wait(50);
 		}
+		
+		PORTD = 0;
+		wait(50);
 		
 	}
 	
 	return 0;
 }
+
+
