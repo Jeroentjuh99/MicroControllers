@@ -41,7 +41,7 @@ void getModulo(int a, int b){
 int main()
 { 
 	// Opslaan in array
-	DOSTUFF stuff[4] = { { addInt }, { multiplyInt }, { extractInt }, { getModulo } };
+	DOSTUFF stuff[4] = { { &addInt }, { &multiplyInt }, { &extractInt }, { getModulo } };
 	
 	void (*operation)(void*);
 	
@@ -52,3 +52,4 @@ int main()
 	
     return 0;
 }
+
