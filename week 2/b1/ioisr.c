@@ -89,7 +89,10 @@ Version :    	DMK, Initial code
 	
 	// Enable global interrupt system
 	//SREG = 0x80;			// Of direct via SREG of via wrapper
-	sei();				
+	sei();		
+
+
+	SREG = 0b10000000;		
 
 	while (1)
 	{

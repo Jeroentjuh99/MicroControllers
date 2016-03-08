@@ -19,6 +19,8 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
+void timer2init( void );
+
 #define BIT(x) (1 << (x))
 
 /*
